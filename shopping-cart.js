@@ -143,7 +143,7 @@ class ShoppingCart {
         return +totalPrice.toFixed(2);
     }
     /**
-     * Gets the total price for the passed product Code
+     * Gets the total price for the passed product Code without special offer
      * @param {string} productCode 
      * @returns {Number}
      */
