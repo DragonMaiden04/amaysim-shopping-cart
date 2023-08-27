@@ -15,6 +15,10 @@
 -  Alternatively, you can also add test case scenarios on the test files. You can locate the test files inside the folder **"tests"**.
 
 ## How to run test cases
+- Make sure to install dependencies first which is Jest (for testing purposes only)
+    ```
+    npm i
+    ```
 - To run the test cases, you can use this command:
     ```
     npm run test
