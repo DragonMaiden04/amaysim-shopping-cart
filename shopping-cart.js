@@ -1,11 +1,21 @@
 const {PRODUCT_CODES, PRODUCT_NAMES, PROMO_PRICE_5GB} = require('./shopping-cart-constants');
-
+/**
+ * Shopping Cart
+ * @author Alyssa Mae Basalo
+ * @since August 25 2023
+ */
 class ShoppingCart {
     #priceRule;
     #currentPromoCode;
     #cart;
     #validPromo;
     #isFirstMonth;
+    /**
+     * Shopping Cart constructor
+     * @param {object} priceRule - Price rule that will be used
+     * @param {string} currentPromoCode - Promo code rule
+     * @param {boolean} isFirstMonth - Is the computation will be based on the first month
+     */
     constructor(priceRule, currentPromoCode='I<3AMAYSIM', isFirstMonth=true) {
         this.#priceRule = priceRule;
         this.#currentPromoCode = currentPromoCode;
@@ -13,6 +23,11 @@ class ShoppingCart {
         this.#validPromo = false;
         this.#isFirstMonth = isFirstMonth;
     }
+    /**
+     * Adds 1 quantity on the passed product code
+     * @param {string} productCode 
+     * @returns void
+     */
     addToCart(productCode) {
         if (this.#cart[productCode] === undefined) {
             this.#cart[productCode] = 1;
@@ -20,6 +35,11 @@ class ShoppingCart {
         }
         this.#cart[productCode]++;
     }
+    /**
+     * Removes 1 quantity on the passed product code
+     * @param {string} productCode 
+     * @returns 
+     */
     removeFromCart(productCode) {
         if (this.#cart[productCode] === undefined) {
             return
@@ -30,9 +50,18 @@ class ShoppingCart {
         }
         delete this.#cart[productCode];
     }
+    /**
+     * Returns the all products added in the cart by the user
+     * @returns {object}
+     */
     viewCart() {
         return this.#cart;
     }
+    /**
+     * Checks if input promo code is valid
+     * @param {string} inputCode 
+     * @returns void
+     */
     applyPromoCode(inputCode) {
         if (inputCode === this.#currentPromoCode) {
             this.#validPromo = true;
@@ -40,6 +69,10 @@ class ShoppingCart {
         }
         this.#validPromo = false;
     }
+    /**
+     * Show expected cart items
+     * @returns {array}
+     */
     showItems() {
         const expectedItems = this.#addPromoItems();
         let itemList = [];
@@ -52,6 +85,10 @@ class ShoppingCart {
         }
         return itemList;
     }
+    /**
+     * Returns expected total price of the cart
+     * @returns {string} 
+     */
     getTotalPrice() {
         if (Object.keys(this.#cart).length === 0) {
             return 'Cart is empty';
@@ -69,6 +106,10 @@ class ShoppingCart {
         }
         return `$${totalprice.toFixed(2)}`;
     }
+    /**
+     * Gets the total price for Unlimited 1GB based on the special offers
+     * @returns {Number}
+     */
     #checkTotalPriceUlt1() {
         const PRODUCT_CODE = PRODUCT_CODES["UNLI1GB"];
         const productQuantity = this.#cart[PRODUCT_CODE];
@@ -84,6 +125,10 @@ class ShoppingCart {
         }
         return +totalPrice.toFixed(2);
     }
+    /**
+     * Gets the total price for Unlimited 5GB based on the special offers
+     * @returns {Number}
+     */
     #checkTotalPriceUlt5() {
         const PRODUCT_CODE = PRODUCT_CODES["UNLI5GB"];
         const productQuantity = this.#cart[PRODUCT_CODE];
@@ -97,6 +142,11 @@ class ShoppingCart {
         }
         return +totalPrice.toFixed(2);
     }
+    /**
+     * Gets the total price for the passed product Code
+     * @param {string} productCode 
+     * @returns {Number}
+     */
     #checkPriceWithoutPromo(productCode) {
         if (this.#cart[productCode] === undefined) {
             return 0;
@@ -104,6 +154,10 @@ class ShoppingCart {
         let totalPrice = this.#cart[productCode] * this.#priceRule[productCode];
         return +totalPrice.toFixed(2);
     }
+    /**
+     * Returns expected product list and count based on the special offers
+     * @returns {object}
+     */
     #addPromoItems() {
         let expectedCart = Object.assign({}, this.#cart);
         const UNLI2GB = PRODUCT_CODES["UNLI2GB"];
