@@ -1,4 +1,5 @@
-const {PRODUCT_CODES, PRODUCT_NAMES, PROMO_PRICE_5GB} = require('./shopping-cart-constants');
+const {PRODUCT_CODES, PRODUCT_NAMES, PROMO_PRICE_5GB, DEFAULT_PRICE_RULES} = require('./shopping-cart-constants');
+
 /**
  * Shopping Cart
  * @author Alyssa Mae Basalo
@@ -12,11 +13,11 @@ class ShoppingCart {
     #isFirstMonth;
     /**
      * Shopping Cart constructor
-     * @param {object} priceRule - Price rule that will be used
-     * @param {string} currentPromoCode - Promo code rule
-     * @param {boolean} isFirstMonth - Is the computation will be based on the first month
+     * @param {object} priceRule - Price rule that will be used 
+     * @param {string} currentPromoCode - Promo code rule (Default: I<3AMAYSIM)
+     * @param {boolean} isFirstMonth - Is the computation will be based on the first month (Default: true)
      */
-    constructor(priceRule, currentPromoCode='I<3AMAYSIM', isFirstMonth=true) {
+    constructor(priceRule=DEFAULT_PRICE_RULES, currentPromoCode='I<3AMAYSIM', isFirstMonth=true) {
         this.#priceRule = priceRule;
         this.#currentPromoCode = currentPromoCode;
         this.#cart = {};

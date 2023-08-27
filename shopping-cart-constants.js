@@ -14,8 +14,15 @@ const PRODUCT_NAMES =  {
 
 const PROMO_PRICE_5GB = 39.90;
 
+const DEFAULT_PRICE_RULES = {
+    "ult_small"  : 24.90,
+    "ult_medium" : 29.90,
+    "ult_large"  : 44.90,
+    "1gb"        : 9.90
+}; 
 module.exports = {
     PRODUCT_CODES, 
     PRODUCT_NAMES,
-    PROMO_PRICE_5GB
+    PROMO_PRICE_5GB,
+    DEFAULT_PRICE_RULES
 }
