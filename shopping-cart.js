@@ -1,15 +1,17 @@
-const {PRODUCT_CODES, PRODUCT_NAMES} = require('./shopping-cart-constants');
+const {PRODUCT_CODES, PRODUCT_NAMES, PROMO_PRICE_5GB} = require('./shopping-cart-constants');
 
 class ShoppingCart {
     #priceRule;
     #currentPromoCode;
     #cart;
     #validPromo;
-    constructor(priceRule, currentPromoCode='I<3AMAYSIM') {
+    #isFirstMonth;
+    constructor(priceRule, currentPromoCode='I<3AMAYSIM', isFirstMonth=true) {
         this.#priceRule = priceRule;
         this.#currentPromoCode = currentPromoCode;
         this.#cart = {};
         this.#validPromo = false;
+        this.#isFirstMonth = isFirstMonth;
     }
     addToCart(productCode) {
         if (this.#cart[productCode] === undefined) {
@@ -69,26 +71,29 @@ class ShoppingCart {
     }
     #checkTotalPriceUlt1() {
         const PRODUCT_CODE = PRODUCT_CODES["UNLI1GB"];
-        if (this.#cart[PRODUCT_CODE] === undefined) {
+        const productQuantity = this.#cart[PRODUCT_CODE];
+        const price = this.#priceRule[PRODUCT_CODE];
+        if (productQuantity === undefined) {
             return 0;
         }
-        let totalPrice = this.#cart[PRODUCT_CODE] * this.#priceRule[PRODUCT_CODE];
-        if (this.#cart[PRODUCT_CODE] > 2) {
-            const totalPromo = Math.trunc(this.#cart[PRODUCT_CODE] / 3);
-            const promoQuantity = this.#cart[PRODUCT_CODE] - totalPromo;
-            totalPrice = promoQuantity * this.#priceRule[PRODUCT_CODE];
+        let totalPrice = productQuantity * price;
+        if (productQuantity > 2 && this.#isFirstMonth === true) {
+            const quotient = Math.trunc(productQuantity / 3);
+            const promoQuantity = productQuantity - quotient;
+            totalPrice = promoQuantity * price;
         }
         return +totalPrice.toFixed(2);
     }
     #checkTotalPriceUlt5() {
         const PRODUCT_CODE = PRODUCT_CODES["UNLI5GB"];
-        const PROMO_PRICE = 39.90;
-        if (this.#cart[PRODUCT_CODE] === undefined) {
+        const productQuantity = this.#cart[PRODUCT_CODE];
+        const price = this.#priceRule[PRODUCT_CODE];
+        if (productQuantity === undefined) {
             return 0;
         }
-        let totalPrice = this.#cart[PRODUCT_CODE] * this.#priceRule[PRODUCT_CODE];
-        if (this.#cart[PRODUCT_CODE] > 3) {
-            totalPrice = this.#cart[PRODUCT_CODE] * PROMO_PRICE;
+        let totalPrice = productQuantity * price;
+        if (productQuantity > 3 && this.#isFirstMonth === true) {
+            totalPrice = productQuantity * PROMO_PRICE_5GB;
         }
         return +totalPrice.toFixed(2);
     }
@@ -100,14 +105,14 @@ class ShoppingCart {
         return +totalPrice.toFixed(2);
     }
     #addPromoItems() {
-        const copiedCart = Object.assign({}, this.#cart);
+        let expectedCart = Object.assign({}, this.#cart);
         const UNLI2GB = PRODUCT_CODES["UNLI2GB"];
         const DATAPACK1GB = PRODUCT_CODES["1GBDATAPACK"];
-        if (copiedCart[UNLI2GB]) {
-            copiedCart[DATAPACK1GB] = copiedCart[DATAPACK1GB] !== undefined ?  copiedCart[DATAPACK1GB] + copiedCart[UNLI2GB] : copiedCart[UNLI2GB];
-            return copiedCart;
+        if (expectedCart[UNLI2GB]) {
+            expectedCart[DATAPACK1GB] = expectedCart[DATAPACK1GB] !== undefined ?  expectedCart[DATAPACK1GB] + expectedCart[UNLI2GB] : expectedCart[UNLI2GB];
+            return expectedCart;
         }
-        return copiedCart
+        return expectedCart
     }
 }
 module.exports = ShoppingCart

@@ -12,4 +12,10 @@ const PRODUCT_NAMES =  {
     "1gb"        : "1 GB Data-pack"
 }
 
-module.exports = {PRODUCT_CODES, PRODUCT_NAMES}
+const PROMO_PRICE_5GB = 39.90;
+
+module.exports = {
+    PRODUCT_CODES, 
+    PRODUCT_NAMES,
+    PROMO_PRICE_5GB
+}
