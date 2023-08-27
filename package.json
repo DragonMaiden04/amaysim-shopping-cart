@@ -4,7 +4,8 @@
   "description": "Amaysim shopping cart exercise",
   "main": "test.js",
   "scripts": {
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",

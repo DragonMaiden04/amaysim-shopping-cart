@@ -17,8 +17,13 @@
 ## How to run test cases
 - To run the test cases, you can use this command:
     ```
-    npm test
+    npm run test
     ```
+- To run the test cases with coverage result,  you can use this command:
+    ```
+    npm run test:coverage
+    ```
+    - Coverage result (index.html) will be at `./coverage/lcov-report` folder
 
 ## Input and Expected Result Formats
 1. `priceRule` (Class parameter) - Object

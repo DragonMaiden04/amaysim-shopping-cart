@@ -125,26 +125,40 @@ describe('shopping cart - 1st month', () => {
     test('Additional Scenario with new promo code rule', () => {
         const expectedItems = [
             {
-                "product_name": "Unlimited 1GB",
-                "product_code": "ult_small",
-                "count": 2
+                "product_name": "Unlimited 2GB",
+                "product_code": "ult_medium",
+                "count": 1
             },
             {
                 "product_name": "Unlimited 5GB",
                 "product_code": "ult_large",
                 "count": 3
+            },
+            {
+                "product_name": "1 GB Data-pack",
+                "product_code": "1gb",
+                "count": 1
             }
         ];
         let cart = new ShoppingCart(undefined, 'AMAZING');
-        //2 Unli 1GB
-        cart.addToCart('ult_small');
-        cart.addToCart('ult_small');
+        //1 Unli 2GB
+        cart.addToCart('ult_medium');
         //3 Unli 5GB only
         cart.addToCart('ult_large');
         cart.addToCart('ult_large');
         cart.addToCart('ult_large');
         cart.applyPromoCode('AMAZING');
-        expect(cart.getTotalPrice()).toEqual('$166.05');
+        expect(cart.getTotalPrice()).toEqual('$148.14');
         expect(cart.showItems()).toEqual(expectedItems);
+    });
+    test('Empty Cart', () => {
+        let cart = new ShoppingCart();
+        cart.removeFromCart('ult_small');
+        //3 Unli 5GB only
+        cart.addToCart('ult_large');
+        cart.removeFromCart('ult_large');
+        expect(cart.getTotalPrice()).toEqual('Cart is empty');
+        expect(cart.showItems()).toEqual([]);
+        expect(cart.viewCart()).toEqual({});
     });
 });
