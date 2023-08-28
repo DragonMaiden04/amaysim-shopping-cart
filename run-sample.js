@@ -1,5 +1,7 @@
 const ShoppingCart = require('./shopping-cart');
+//default price, promo code and firt month computation will be applied on cart
 let cart = new ShoppingCart();
+
 // Pass the product code you desire to add
 cart.addToCart('ult_small');
 cart.addToCart('ult_small');
