@@ -109,7 +109,7 @@ Contents:
             };
         ```
 ## Other Sample Usage
-- Flexible price rule, promo code rule for 10% discount is 'I<3AMAYSIM' and firt month computation will be applied on cart.
+- Flexible price rule, promo code rule for 10% discount is 'I<3AMAYSIM' and first month computation will be applied on cart.
 ```javascript
         const priceRules = {
             "ult_small"  : 30.65,
@@ -125,7 +125,7 @@ Contents:
 
         //...
 ```
-- Flexible price rule, promo code rule for 10% discount is 'AMAZING' and firt month computation will be applied on cart.
+- Flexible price rule, promo code rule for 10% discount is 'AMAZING' and first month computation will be applied on cart.
 ```javascript
         const priceRules = {
             "ult_small"  : 30.65,
